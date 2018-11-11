@@ -1,0 +1,10 @@
+# Apply geocode format
+
+    fileLoc = open('demoLocations.txt', 'r')
+    fileCode = open('demoGeoCodes.txt', 'r')
+    dataLoc = fileLoc.readlines()
+    dataCode = fileCode.readlines()
+    codes = {}
+    for i, v in enumerate(dataLoc):
+        codes[v.strip()] = dataCode[i].strip()
+    df['GeoCode'] = df['Address'].map(lambda x: codes[x])  # To make all the address as correspondence in GeoCode

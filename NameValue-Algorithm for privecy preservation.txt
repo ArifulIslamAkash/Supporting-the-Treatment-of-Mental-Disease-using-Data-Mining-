@@ -1,0 +1,33 @@
+# Apply NameValue Algorithm
+
+
+    salutation = ["a v m", "admiraal", "air cdre", "air commodore", "air marshal", "air vice marshal", "alderman", "alhaji", "ambassador", "baron", "barones", "brig", "brig gen", "brig general", "brigadier", "brigadier general", "brother", "canon", "capt", "captain", "cardinal", "cdr", "chief", "cik", "cmdr", "col", "col dr", "colonel", "commandant", "commander", "commissioner", "commodore", "comte", "comtessa", "congressman", "conseiller", "consul", "conte", "contessa", "corporal", "councillor", "count", "countess", "crown prince", "crown princess", "dame", "datin", "dato", "datuk", "datuk seri",
+            "deacon", "deaconess", "dean", "dhr", "dipl ing", "doctor", "dott", "dott sa", "dr", "dr ing", "dra", "drs", "embajador", "embajadora", "en", "encik", "eng", "eur ing", "exma sra", "exmo sr", "f o", "father", "first lieutient", "first officer", "flt lieut", "flying officer", "fr", "frau", "fraulein", "fru", "gen", "generaal", "general", "governor", "graaf", "gravin", "group captain", "grp capt", "h e dr", "h h", "h m", "h r h", "hajah", "haji", "hajim", "her highness", "her majesty", "herr", "high chief", "his highness",
+            "his holiness", "his majesty", "hon", "hr", "hra", "ing", "ir", "jonkheer", "judge", "justice", "khun ying", "kolonel", "lady", "lcda", "lic", "lieut", "lieut cdr", "lieut col", "lieut gen", "lord", "m", "m l", "m r", "madame", "mademoiselle", "maj gen", "major", "master", "mevrouw", "miss", "mlle", "mme", "monsieur", "monsignor", "mr", "mrs", "ms", "mstr", "nti", "pastor", "president", "prince", "princess", "princesse", "prinses", "prof", "prof dr", "prof sir", "professor",
+            "puan", "puan sri", "rabbi", "rear admiral", "rev", "rev canon", "rev dr", "rev mother", "reverend", "rva", "senator", "sergeant", "sheikh", "sheikha", "sig", "sig na", "sig ra", "sir", "sister", "sqn ldr", "sr", "sr d", "sra", "srta", "sultan", "tan sri", "tan sri dato", "tengku", "teuku",
+            "mrs.", "mr.", "most.", "md.", "master.", "ms.", "alhaz", "hazi", "haji", "mohammad", "muhammad", "dr.", "miss", "prof.", "kazi", "engineer"] 
+
+    def processName(name):
+        name = name.lower()  # Make name all letter in lowercase 
+        namesplits = name.split()  # To break a large string down into smaller
+        for sals in salutation:
+            if sals in namesplits:
+                namesplits.remove(sals) # To remove name salutation and save in namesplits variable
+        
+        trans = str.maketrans('', '', 'aeiou')  # The method maketrans() returns a translation table that maps each character in the intabstring into the character at the same position in the outtab string. outtab - This is the string having corresponding mapping character.
+        for i, nams in enumerate(namesplits):  # enumerate() - It returns an enumerate object.
+            namesplits[i] = nams[0] + nams[1:].translate(trans)  # translate() method takes the translation table to replace/translate characters in the given string as per the mapping table.
+        
+        name = ' '.join(namesplits)  # By join() - simply concatenate two strings
+        
+        name = name.replace('g', 'j')
+        name = name.replace('z', 'j')
+        name = name.replace('q', 'k')
+        
+        trans = str.maketrans('aeioubcdfhjklmnprstvwxy .-', 'tuvwxabcdefghijklmnopqrsyz')  # The string maketrans() method returns a mapping table for translation usable for translate() method.
+        name = name.translate(trans)  # The string translate() method returns a string where each character is mapped to its corresponding character in the translation table.
+        
+        return name
+
+
+    df['NameValue'] = df['Patient Name'].map(processName)  
